@@ -1,0 +1,73 @@
+/*Fijo*/
+body {
+    margin: 0;
+    font-family: 'Exo 2', sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #000;
+}
+
+.logo img {
+    height: 60px;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 30px;
+}
+
+nav ul li {
+    font-size: 16px;
+}
+.highlight {
+    font-size: 18x;
+    color: #fff;
+    text-align: center;
+    -webkit-animation: glow 2s ease-in-out infinite alternate;
+    -moz-animation: glow 2s ease-in-out infinite alternate;
+     animation: glow 2s ease-in-out infinite alternate;
+}
+@-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffffff}
+    to {
+      text-shadow: 0 0 20px #fff, 0 0 30px #ee070742;
+    }
+  }
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+/*Fijo*/
+
+
+
+
+/*Fijo*/
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 14px;
+}
+/*Fijo*/

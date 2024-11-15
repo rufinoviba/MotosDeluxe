@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MOTOS DELUXE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Inicio_styles.css">
+    <link rel="icon" type="image/x-icon" href="Inicio_resources/favicon.ico">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="Sistema/index.html">
+                <img src="Inicio_resources/Moto1.png" alt="Motos DELUXE">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Inicio.html" class="highlight"><b>Inicio</b></a></li>
+                <li><a href="Motocicletas.html">Motocicletas</a></li>
+                <li><a href="Colecciones.html">Colecciones</a></li>
+                <li><a href="Contacto.html">Contacto</a></li>
+                <li><a href="Acerca.html">Acerca de Nosotros</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <a></a>
+        </div>
+    </header>
+
+    <main>
+        <div class="carousel-container">
+            <div class="carousel-videos">
+                <div class="carousel-video">
+                    <video src="Inicio_resources/Moto2.mp4" muted></video>
+                </div>
+                <div class="carousel-video">
+                    <video src="Inicio_resources/Moto3.mp4" muted autoplay></video>
+                </div>
+                <div class="carousel-video">
+                    <video src="Inicio_resources/Moto4.mp4" muted autoplay></video>
+                </div>
+                <div class="carousel-video">
+                    <video src="Inicio_resources/Moto5.mp4" muted autoplay></video>
+                </div>
+            </div>
+            <div class="carousel-control prev">&#10094;</div>
+            <div class="carousel-control next">&#10095;</div>
+        </div>
+
+        <div class="hero-text">
+            <h2>Motocicletas</h2>
+            <h1>Premium</h1>
+            <a href="Motocicletas.html" class="discover">Descubrir</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2024 Reales hasta la muerte. Todos los derechos reservados por la empresa los DAN'S.</p>
+    </footer>
+
+    <script>
+        const videos = document.querySelectorAll('.carousel-video video');
+        const carousel = document.querySelector('.carousel-videos');
+        const prevButton = document.querySelector('.prev');
+        const nextButton = document.querySelector('.next');
+
+        let currentIndex = 0;
+        const videoDuration = 5000;
+
+        function showVideo(index) {
+            carousel.style.transform = `translateX(${-index * 100}%)`;
+            videos.forEach((video, i) => {
+                if (i === index) {
+                    video.play();
+                } else {
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+        }
+
+        function nextVideo() {
+            currentIndex = (currentIndex + 1) % videos.length;
+            showVideo(currentIndex);
+        }
+
+        function prevVideo() {
+            currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+            showVideo(currentIndex);
+        }
+        showVideo(currentIndex);
+        setInterval(nextVideo, videoDuration);
+        nextButton.addEventListener('click', nextVideo);
+        prevButton.addEventListener('click', prevVideo);
+    </script>
+</body>
+
+</html>

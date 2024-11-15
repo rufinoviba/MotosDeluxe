@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MOTOS DELUXE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="z1000_styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="Inicio_resources/Moto1.png" alt="Motos DELUXE">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Inicio.html">Inicio</a></li>
+                <li><a href="Motocicletas.html" class="highlight"><b>Motocicletas</b></a></li>
+                <li><a href="Colecciones.html">Colecciones</a></li>
+                <li><a href="Contacto.html">Contacto</a></li>
+                <li><a href="Acerca.html">Acerca de Nosotros</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <a href="#"></a>
+        </div>
+    </header>
+
+   <div class="main_container">
+        <img src="z1000_resources/z1000_main.jpg">
+        <h2>Kawasaki Z1000</h2>
+   </div>
+
+   <!--Contenedor de las cartas--> 
+   <div class="card_container">
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Motor</h2>
+            <img src="z1000_resources/icon1.png" alt="Imagen de la Card" class="card-image">
+            <div class="video-container">
+                <video class="video" src="z1000_resources/v1.mp4"></video>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Sonido</h2>
+            <img src="z1000_resources/icon2.png" alt="Imagen de la Card" class="card-image">
+            <div class="video-container">
+                <video class="video" src="z1000_resources/v3.mp4"></video>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Diseño</h2>
+            <img src="z1000_resources/icon3.png" alt="Imagen de la Card" class="card-image">
+            <div class="video-container">
+                <video class="video" src="z1000_resources/v2.mp4"></video>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <h2 class="card-title">Velocidad</h2>
+            <img src="z1000_resources/icon4.png" alt="Imagen de la Card" class="card-image">
+            <div class="video-container">
+                <video class="video" src="z1000_resources/v4.mp4"></video>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!--Specs-->
+    <div class="Specs">
+        <div class="specs_image">
+            <img src="z1000_resources/f1.jpg" alt="image">
+        </div>
+        <div class="specs_text">
+            <p>Cilindrada<br>
+                1043 CC<br><br>
+                Nro de Cilindros<br>
+                4<br><br>
+                Potencia<br>
+                140 HP<br><br>
+                Torque<br>
+                111 NM
+        </div>
+    </div>
+
+    <!--Gallery-->
+    <div class="gallery">
+        <img src="z1000_resources/f4.jpg" alt="Moto Z1000" class="gallery-item">
+        <img src="z1000_resources/f5.jpg" alt="Moto Z1000" class="gallery-item">
+        <img src="z1000_resources/f6.jpg" alt="Moto Z1000" class="gallery-item">
+    </div>
+    
+
+
+
+        
+    <footer>
+        <p>© 2024 Reales hasta la muerte. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            const videoContainer = card.querySelector('.video-container');
+            const video = card.querySelector('.video');
+            const cardImage = card.querySelector('.card-image');
+        
+            card.addEventListener('click', () => {
+                if (videoContainer.style.display === 'flex') {
+                    video.pause();
+                    video.currentTime = 0; 
+                    videoContainer.style.display = 'none';
+                } else {
+                    
+                    videoContainer.style.display = 'flex';
+                    video.play();
+                }
+            });
+        
+            card.addEventListener('mouseenter', () => {
+                cardImage.style.opacity = '0.7'; 
+            });
+        
+            card.addEventListener('mouseleave', () => {
+                cardImage.style.opacity = '1'; 
+            });
+        });
+        </script>
+        
+    
+</body>
+
+</html>

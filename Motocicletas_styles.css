@@ -1,0 +1,97 @@
+/*Fijo*/
+body {
+    font-family: 'Exo 2', sans-serif;
+    background-color: black;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #000000;
+}
+
+.logo img {
+    height: 60px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+}
+
+nav ul li {
+    font-size: 16px;
+}
+
+.highlight {
+    font-size: 18x;
+    color: #fff;
+    text-align: center;
+    -webkit-animation: glow 2s ease-in-out infinite alternate;
+    -moz-animation: glow 2s ease-in-out infinite alternate;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+    from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ffffff
+    }
+
+    to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ee070742;
+    }
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search a {
+    opacity: 0;
+}
+
+.container {
+    position: relative;
+    width: 70%;
+    margin: 20px auto;
+}
+
+.container img {
+    width: 100%;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-radius: 10px;
+    object-fit: cover;
+    height: 75vh;
+}
+
+.container img:hover {
+    box-shadow: 0 0 30px rgb(255, 255, 255);
+    transform: scale(1.04);
+}
+
+.container h2 {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #000;
+    color: #fff;
+    font-size: 14px;
+}

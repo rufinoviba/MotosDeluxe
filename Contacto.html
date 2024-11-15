@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MOTOS DELUXE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Contacto_styles.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="Sistema/index.html">
+                <img src="Inicio_resources/Moto1.png" alt="Motos DELUXE">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Inicio.html">Inicio</a></li>
+                <li><a href="Motocicletas.html">Motocicletas</a></li>
+                <li><a href="Colecciones.html">Colecciones</a></li>
+                <li><a href="Contacto.html" class="highlight"><b>Contacto</b></a></li>
+                <li><a href="Acerca.html">Acerca de Nosotros</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <a></a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Formulario de Contacto</h1>
+        <form action="/enviar" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="correo">Correo Electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono">
+
+            <label for="razon">Razón del Contacto:</label>
+            <textarea id="razon" name="razon" rows="4" required></textarea>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+
+    <footer>
+        <p>© 2024 Reales hasta la muerte. Todos los derechos reservados.</p>
+    </footer>
+</body>
+
+</html>

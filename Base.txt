@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MOTOS DELUXE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles"> 
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <img src="Moto1.png" alt="Motos DELUXE">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Motos1.html" class="highlight"><b>Inicio</b></a></li>
+                <li><a href="motorcycles.html">Motorcycles</a></li>
+                <li><a href="#Colecciones">Colecciones</a></li>
+                <li><a href="#Contacto">Contacto</a></li>
+                <li><a href="#Nosotros">Acerca de Nosotros</a></li>
+            </ul>
+        </nav>
+        <div class="search">
+            <a href="#">Buscar</a>
+        </div>
+    </header>
+
+	/*Aqui el contenido */
+
+
+    <footer>
+        <p>© 2024 Reales hasta la muerte. Todos los derechos reservados.</p>
+    </footer>
+    </body>
+</html>
