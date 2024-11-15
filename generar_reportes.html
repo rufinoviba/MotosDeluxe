@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Reportes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="generar_reportes.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Moto1.png" alt="Logo Motos DELUXE" class="logo">
+            <h1>Análisis de Ventas y Reportes de Actividades</h1>
+            <button class="logout-button" onclick="window.location.href='index.html'">Salir</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="ventas_diarias.html">Ventas Diarias</a></li>
+            <li><a href="generar_reportes.html">Generar Reportes</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <section class="generar-reportes">
+        <h2>Elige el tipo de reporte</h2>
+        <button onclick="generarReporte('diario')">Reporte Diario</button>
+        <button onclick="generarReporte('semanal')">Reporte Semanal</button>
+        <button onclick="generarReporte('mensual')">Reporte Mensual</button>
+        <button onclick="abrirModal()">Reporte Personalizado</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Motos DELUXE. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Modal para reporte personalizado -->
+    <div id="modalPersonalizado" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h3>Generar Reporte Personalizado</h3>
+            <label for="fechaInicio">Fecha de inicio:</label>
+            <input type="date" id="fechaInicio">
+            <label for="fechaFin">Fecha de fin:</label>
+            <input type="date" id="fechaFin">
+            <label for="datos">Elige los datos a incluir:</label>
+            <select id="datos">
+                <option value="ventas">Ventas</option>
+                <option value="actividades">Actividades</option>
+                <option value="ambos">Ambos</option>
+            </select>
+            <label for="categoria">Elige la categoría de las ventas:</label>
+            <select id="categoria">
+                <option value="deportivas">Deportivas</option>
+                <option value="lujo">Lujo</option>
+                <option value="todas">Todas</option>
+            </select>
+            <button onclick="generarReportePersonalizado()">Generar PDF</button>
+        </div>
+    </div>
+
+    <script>
+        // Función para abrir el modal
+        function abrirModal() {
+            document.getElementById("modalPersonalizado").style.display = "block";
+        }
+
+        // Función para cerrar el modal
+        function cerrarModal() {
+            document.getElementById("modalPersonalizado").style.display = "none";
+        }
+
+        // Función para generar reportes predefinidos
+        function generarReporte(tipo) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let titulo = '';
+            let contenido = '';
+
+            switch (tipo) {
+                case 'diario':
+                    titulo = 'Reporte Diario';
+                    contenido = 'Ventas y Actividades del día:\n\n';
+                    contenido += 'Ventas: 20\nActividades: 5 tareas completadas';
+                    break;
+                case 'semanal':
+                    titulo = 'Reporte Semanal';
+                    contenido = 'Resumen semanal de ventas y actividades:\n\n';
+                    contenido += 'Ventas: 140\nActividades: 35 tareas completadas';
+                    break;
+                case 'mensual':
+                    titulo = 'Reporte Mensual';
+                    contenido = 'Resumen mensual de ventas y actividades:\n\n';
+                    contenido += 'Ventas: 600\nActividades: 150 tareas completadas';
+                    break;
+            }
+
+            // Encabezado
+            doc.setFont('Bodoni Moda', 'bold');
+            doc.setFontSize(18);
+            doc.text(titulo, 10, 10);
+
+            // Cuerpo del reporte
+            doc.setFont('Bodoni Moda', 'normal');
+            doc.setFontSize(12);
+            doc.text(contenido, 10, 30);
+
+            // Generar y guardar el archivo PDF
+            doc.save(`${titulo}.pdf`);
+        }
+
+        // Función para generar reporte personalizado
+        function generarReportePersonalizado() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            let fechaInicio = document.getElementById("fechaInicio").value;
+            let fechaFin = document.getElementById("fechaFin").value;
+            let datos = document.getElementById("datos").value;
+            let categoria = document.getElementById("categoria").value;
+
+            if (!fechaInicio || !fechaFin) {
+                alert("Por favor, selecciona las fechas.");
+                return;
+            }
+
+            let titulo = 'Reporte Personalizado';
+            let contenido = `Reporte desde ${fechaInicio} hasta ${fechaFin}:\n\n`;
+
+            if (datos === 'ventas') {
+                contenido += 'Incluye las ventas.\nVentas: 500';
+            } else if (datos === 'actividades') {
+                contenido += 'Incluye las actividades.\nActividades: 120 tareas completadas';
+            } else {
+                contenido += 'Incluye ventas y actividades.\nVentas: 500\nActividades: 120 tareas completadas';
+            }
+
+            if (categoria === 'deportivas') {
+                contenido += '\nCategoría: Motos Deportivas\nVentas: 200';
+            } else if (categoria === 'lujo') {
+                contenido += '\nCategoría: Motos de Lujo\nVentas: 150';
+            } else {
+                contenido += '\nCategoría: Todas las Motos\nVentas: 350';
+            }
+
+            // Encabezado
+            doc.setFont('Bodoni Moda', 'bold');
+            doc.setFontSize(18);
+            doc.text(titulo, 10, 10);
+
+            // Cuerpo del reporte
+            doc.setFont('Bodoni Moda', 'normal');
+            doc.setFontSize(12);
+            doc.text(contenido, 10, 30);
+
+            // Guardar el PDF
+            doc.save('Reporte_Personalizado.pdf');
+
+            // Cerrar el modal después de generar el reporte
+            cerrarModal();
+        }
+
+        // Cerrar el modal al hacer clic fuera de él
+        window.onclick = function (event) {
+            let modal = document.getElementById("modalPersonalizado");
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
+
+        // Validación de acceso a la página
+        const userRole = localStorage.getItem('userRole');
+
+        if (userRole !== 'analista') {
+            alert('No tienes permiso para acceder a esta página.');
+            window.location.href = 'index.html'; // Redirigir a la página de inicio de sesión
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Ventas y Reportes de Actividades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dashboard.css">
+    <!-- Agregamos Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Moto1.png" alt="Logo Motos DELUXE" class="logo">
+            <h1>Análisis de Ventas y Reportes de Actividades</h1>
+            <button class="logout-button" onclick="window.location.href='index.html'">Salir</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="ventas_diarias.html">Ventas Diarias</a></li>
+            <li><a href="generar_reportes.html">Generar Reportes</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="dashboard">
+            <h2>Resumen de Ventas</h2>
+            <div class="resumen">
+                <div class="ventas">
+                    <h3>Ventas de la semana</h3>
+                    <p>$0 MXN</p> <!-- Este valor se actualizará dinámicamente -->
+                </div>
+                <div class="grafica">
+                    <h3>Gráfico de Ventas</h3>
+                    <!-- Canvas para la gráfica -->
+                    <canvas id="ventasChart"></canvas>
+                </div>
+            </div>
+
+            <div class="resumen">
+                <!-- Productos Más Vendidos -->
+                <div class="productos-mas-vendidos">
+                    <h3>Productos Más Vendidos</h3>
+                    <canvas id="productosMasVendidosChart" width="400" height="200"></canvas>
+                </div>
+                <div class="actualizaciones">
+                    <h3>Actualizaciones Recientes</h3>
+                    <div class="actualizaciones-lista">
+                        <div class="actualizacion">
+                            <span class="actualizacion-descripcion">Nuevo producto añadido: Motocicleta Deluxe
+                                Pro</span>
+                        </div>
+                        <div class="actualizacion">
+                            <span class="actualizacion-descripcion">Stock actualizado para Motocicleta Cruiser</span>
+                        </div>
+                        <div class="actualizacion">
+                            <span class="actualizacion-descripcion">Oferta especial de la semana: 10% de descuento en
+                                Deluxe X1</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mejores-vendedores">
+                <h3>Mejores Vendedores del año</h3>
+                <ul>
+                    <li>
+                        <img src="vendedor1.jpeg" alt="Eliud Vilchis Hernandez" class="vendedor-foto"
+                            onclick="mostrarInfo('infoEliud')">
+                        <span onclick="mostrarVentas('ventasEliud')">Eliud Vilchis Hernandez</span>
+                        <div id="ventasEliud" class="vendedor-info">Ventas: 30 unidades</div>
+                        <div id="infoEliud" class="vendedor-info">Información Personal: Edad: 35, Ubicación: CDMX,
+                            Experiencia: 7 años</div>
+                    </li>
+                    <li>
+                        <img src="vendedor2.jpeg" alt="Rufino Vidal Barrera" class="vendedor-foto"
+                            onclick="mostrarInfo('infoRufino')">
+                        <span onclick="mostrarVentas('ventasRufino')">Rufino Vidal Barrera</span>
+                        <div id="ventasRufino" class="vendedor-info">Ventas: 25 unidades</div>
+                        <div id="infoRufino" class="vendedor-info">Información Personal: Edad: 22, Ubicación: EDOMEX,
+                            Experiencia: 2 años</div>
+                    </li>
+                    <li>
+                        <img src="vendedor3.jpeg" alt="Josef Cruz Lázaro" class="vendedor-foto"
+                            onclick="mostrarInfo('infoJosef')">
+                        <span onclick="mostrarVentas('ventasJosef')">Josef Cruz Lázaro</span>
+                        <div id="ventasJosef" class="vendedor-info">Ventas: 20 unidades</div>
+                        <div id="infoJosef" class="vendedor-info">Información Personal: Edad: 26, Ubicación: Monterrey,
+                            Experiencia: 4 años</div>
+                    </li>
+                    <li>
+                        <img src="vendedor4.jpeg" alt="Kathia Estefania Garcia Acevees" class="vendedor-foto"
+                            onclick="mostrarInfo('infofanny')">
+                        <span onclick="mostrarVentas('ventasfany')">Kathia Estefania Garcia Acevees</span>
+                        <div id="ventasfany" class="vendedor-info">Ventas: 15 unidades</div>
+                        <div id="infofanny" class="vendedor-info">Información Personal: Edad: 20, Ubicación: Hidalgo,
+                            Experiencia: 1 años</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="resumen-contenedor">
+                <!-- Mapa de Ventas por Ubicación -->
+                <div class="mapa-ventas">
+                    <h3>Mapa de Ventas por Ubicación</h3>
+                    <div id="map" style="height: 300px; width: 100%;"></div>
+                </div>
+
+                <!-- Pronóstico de Ventas -->
+                <div class="pronostico-ventas">
+                    <h3>Pronóstico de Ventas</h3>
+                    <canvas id="pronosticoVentasChart"></canvas>
+                </div>
+            </div>
+
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Motos DELUXE - Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript para actualizar el total del día y la gráfica -->
+    <script>
+        function verDetalle(producto) {
+            alert(`Mostrando detalles del producto: ${producto}`);
+        }
+
+        function verActualizacion(actualizacion) {
+            alert(`Más información sobre: ${actualizacion}`);
+        }
+
+        function mostrarVentas(id) {
+            document.querySelectorAll('.vendedor-info').forEach(info => info.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function mostrarInfo(id) {
+            document.querySelectorAll('.vendedor-info').forEach(info => info.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const ventasDelDiaElement = document.querySelector('.ventas p');
+
+            // Cargar total del día desde localStorage si existe
+            let totalDia = parseFloat(localStorage.getItem('totalDia')) || 0;
+            ventasDelDiaElement.textContent = `$${totalDia.toLocaleString('en-US')} MXN`;
+
+            // Recuperar ventas diarias desde localStorage
+            const ventas = JSON.parse(localStorage.getItem('ventas')) || [];
+            const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+            // Crear una estructura de ventas por día
+            const ventasPorDia = Array(7).fill(0); // Inicializar arreglo con ceros para cada día
+
+            ventas.forEach(venta => {
+                const fecha = new Date(venta.fechaVenta);
+                const diaSemana = fecha.getDay();
+                ventasPorDia[diaSemana] += venta.ingreso; // Acumular ventas para cada día
+            });
+            function salir() {
+                window.location.href = 'index.html';
+            }
+
+            // Configuración de la gráfica
+            const ctx = document.getElementById('ventasChart').getContext('2d');
+            const ventasChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dias,
+                    datasets: [{
+                        label: 'Ventas Diarias (MXN)',
+                        data: ventasPorDia,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function (value) { return `$${value} MXN`; }
+                            }
+                        }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Función para actualizar la gráfica cada vez que cambian los datos de ventas
+            function actualizarGrafica() {
+                const nuevasVentasPorDia = Array(7).fill(0);
+
+                ventas.forEach(venta => {
+                    const fecha = new Date(venta.fechaVenta);
+                    const diaSemana = fecha.getDay();
+                    nuevasVentasPorDia[diaSemana] += venta.ingreso;
+                });
+
+                ventasChart.data.datasets[0].data = nuevasVentasPorDia;
+                ventasChart.update();
+            }
+
+            // Escuchar el almacenamiento de ventas y actualizar la gráfica
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'ventas') {
+                    actualizarGrafica();
+                }
+            });
+        });
+        const userRole = localStorage.getItem('userRole');
+
+        if (userRole !== 'analista') {
+            alert('No tienes permiso para acceder a esta página.');
+            window.location.href = 'index.html'; // Redirigir a la página de inicio de sesión
+        }
+        // Configuración de la gráfica para "Productos Más Vendidos"
+        const ctxProductos = document.getElementById('productosMasVendidosChart').getContext('2d');
+        new Chart(ctxProductos, {
+            type: 'pie',
+            data: {
+                labels: ['Deluxe X1', 'Deluxe Sport', 'Deluxe Cruiser'],
+                datasets: [{
+                    data: [20, 15, 12],
+                    backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                    borderWidth: 1
+                }]
+            }
+        });
+        // Mapa de Ventas por Ubicación
+        document.addEventListener("DOMContentLoaded", function () {
+            const map = L.map('map').setView([19.4326, -99.1332], 6); // Centrado en México
+
+            // Añade el mapa base de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Ejemplo de marcadores de ubicaciones de ventas
+            const ubicacionesVentas = [
+                { coords: [19.4326, -99.1332], ventas: 150, ciudad: "Ciudad de México" },
+                { coords: [20.6597, -103.3496], ventas: 100, ciudad: "Guadalajara" },
+                { coords: [25.6866, -100.3161], ventas: 120, ciudad: "Monterrey" }
+            ];
+
+            ubicacionesVentas.forEach(ubicacion => {
+                L.marker(ubicacion.coords).addTo(map)
+                    .bindPopup(`<strong>${ubicacion.ciudad}</strong><br>Ventas: ${ubicacion.ventas} unidades`)
+                    .openPopup();
+            });
+        });
+        // Pronóstico de Ventas
+        const ctxPronostico = document.getElementById('pronosticoVentasChart').getContext('2d');
+        const pronosticoVentasChart = new Chart(ctxPronostico, {
+            type: 'line',
+            data: {
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio'],
+                datasets: [{
+                    label: 'Pronóstico de Ventas (MXN)',
+                    data: [10000, 12000, 13000, 15000, 17000, 16000, 18000], // Datos de ejemplo
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    fill: true
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) { return `$${value} MXN`; }
+                        }
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: { size: 14 }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>

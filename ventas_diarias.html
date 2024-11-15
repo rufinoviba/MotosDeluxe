@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Ventas y Reportes de Actividades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="ventas_diarias.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Moto1.png" alt="Logo Motos DELUXE" class="logo">
+            <h1>Análisis de Ventas y Reportes de Actividades</h1>
+            <button class="logout-button" onclick="window.location.href='index.html'">Salir</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="ventas_diarias.html">Ventas Diarias</a></li>
+            <li><a href="generar_reportes.html">Generar Reportes</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <section class="ventas-diarias">
+        <h2>Detalle de Ventas por Producto</h2>
+
+        <!-- Filtro de productos -->
+        <input type="text" id="filterInput" placeholder="Filtrar por producto">
+
+        <!-- Formulario para registrar una nueva venta -->
+        <h3>Registrar nueva venta</h3>
+        <form id="registroForm">
+            <input type="text" id="producto" placeholder="Nombre del producto" required>
+            <input type="number" id="unidades" placeholder="Unidades vendidas" required>
+            <input type="number" id="ingreso" placeholder="Ingreso total" required>
+            <!-- Nuevo campo para seleccionar la fecha de venta -->
+            <input type="date" id="fechaVenta" required>
+            <button type="submit">Registrar Venta</button>
+        </form>
+
+        <!-- Tabla de ventas -->
+        <table id="ventasTabla">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Unidades Vendidas</th>
+                    <th>Ingreso Total</th>
+                    <th>Fecha de Venta</th> <!-- Nueva columna para la fecha de venta -->
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaCuerpo">
+                <!-- Las filas de ventas se cargarán dinámicamente -->
+            </tbody>
+        </table>
+
+        <!-- Sección para mostrar el total del día -->
+        <div class="total-dia">
+            <h3>Total del Día: $<span id="totalDia">0</span></h3>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Motos DELUXE - Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- JavaScript incluido directamente en el HTML -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const ventasTabla = document.getElementById('tablaCuerpo');
+            const registroForm = document.getElementById('registroForm');
+            const filterInput = document.getElementById('filterInput');
+            const totalDiaElement = document.getElementById('totalDia');
+            let totalDia = 0;
+            let ventas = JSON.parse(localStorage.getItem('ventas')) || [];
+
+            // Cargar ventas almacenadas al cargar la página
+            cargarVentas();
+
+            // Registrar nueva venta
+            registroForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                const producto = document.getElementById('producto').value;
+                const unidades = document.getElementById('unidades').value;
+                const ingreso = parseFloat(document.getElementById('ingreso').value);
+                const fechaVenta = document.getElementById('fechaVenta').value; // Obtener la fecha seleccionada
+
+                const nuevaVenta = {
+                    producto,
+                    unidades,
+                    ingreso,
+                    fechaVenta // Incluir la fecha en el registro de la venta
+                };
+
+                ventas.push(nuevaVenta);
+                guardarVentas();
+
+                // Actualizar el total del día
+                totalDia += ingreso;
+                actualizarTotalDia();
+
+                // Actualizar el total del día en el dashboard
+                localStorage.setItem('totalDia', totalDia);
+
+                limpiarFormulario();
+                cargarVentas();
+            });
+
+            // Editar o eliminar venta
+            ventasTabla.addEventListener('click', (e) => {
+                if (e.target.classList.contains('eliminar-btn')) {
+                    const fila = e.target.closest('tr');
+                    const index = fila.getAttribute('data-index');
+                    const ingreso = ventas[index].ingreso;
+
+                    // Restar el ingreso eliminado del total del día
+                    totalDia -= ingreso;
+                    actualizarTotalDia();
+
+                    // Actualizar el total del día en el dashboard
+                    localStorage.setItem('totalDia', totalDia);
+
+                    ventas.splice(index, 1);
+                    guardarVentas();
+                    cargarVentas();
+                }
+
+                if (e.target.classList.contains('editar-btn')) {
+                    const fila = e.target.closest('tr');
+                    const index = fila.getAttribute('data-index');
+                    const venta = ventas[index];
+
+                    document.getElementById('producto').value = venta.producto;
+                    document.getElementById('unidades').value = venta.unidades;
+                    document.getElementById('ingreso').value = venta.ingreso;
+                    document.getElementById('fechaVenta').value = venta.fechaVenta; // Rellenar el campo de fecha
+
+                    // Restar el ingreso anterior del total antes de editar
+                    totalDia -= venta.ingreso;
+                    actualizarTotalDia();
+
+                    // Actualizar el total del día en el dashboard
+                    localStorage.setItem('totalDia', totalDia);
+
+                    // Remover la venta de la lista
+                    ventas.splice(index, 1);
+                    guardarVentas();
+                    cargarVentas();
+                }
+            });
+
+            // Filtrar productos en la tabla
+            filterInput.addEventListener('input', (e) => {
+                const filtro = e.target.value.toLowerCase();
+                const filas = ventasTabla.getElementsByTagName('tr');
+
+                Array.from(filas).forEach(fila => {
+                    const producto = fila.cells[0].textContent.toLowerCase();
+                    fila.style.display = producto.includes(filtro) ? '' : 'none';
+                });
+            });
+
+            // Guardar ventas en localStorage
+            function guardarVentas() {
+                localStorage.setItem('ventas', JSON.stringify(ventas));
+            }
+
+            // Cargar ventas desde localStorage
+            function cargarVentas() {
+                ventasTabla.innerHTML = ''; // Limpiar tabla
+                ventas.forEach((venta, index) => {
+                    const fila = document.createElement('tr');
+                    fila.setAttribute('data-index', index);
+                    fila.innerHTML = `
+                        <td>${venta.producto}</td>
+                        <td>${venta.unidades}</td>
+                        <td>$${venta.ingreso.toLocaleString('en-US')}</td>
+                        <td>${venta.fechaVenta}</td> <!-- Mostrar la fecha de venta -->
+                        <td>
+                            <button class="editar-btn">Editar</button>
+                            <button class="eliminar-btn">Eliminar</button>
+                        </td>
+                    `;
+                    ventasTabla.appendChild(fila);
+                });
+
+                // Calcular el total del día
+                totalDia = ventas.reduce((acc, venta) => acc + venta.ingreso, 0);
+                actualizarTotalDia();
+            }
+
+            // Actualizar la visualización del total del día
+            function actualizarTotalDia() {
+                totalDiaElement.textContent = totalDia.toLocaleString('en-US');
+            }
+
+            // Limpiar formulario
+            function limpiarFormulario() {
+                registroForm.reset();
+            }
+        });
+
+        // Verificar rol de usuario
+        const userRole = localStorage.getItem('userRole');
+
+        if (userRole !== 'vendedor') {
+            alert('No tienes permiso para acceder a esta página.');
+            window.location.href = 'index.html'; // Redirigir a la página de inicio de sesión
+        }
+
+    </script>
+</body>
+
+</html>

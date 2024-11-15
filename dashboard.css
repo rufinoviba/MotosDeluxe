@@ -1,0 +1,355 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: 'Bodoni Moda', serif;
+}
+
+header {
+    background-color: #e60000;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    flex: 1;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    background-color: #111;
+    padding: 15px 0;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+ul li a:hover {
+    color: #ff6666;
+    border-bottom: 2px solid #ff6666;
+}
+
+main {
+    padding: 50px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+.resumen {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.ventas {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Centramos verticalmente */
+    align-items: center;
+    /* Centramos horizontalmente */
+    text-align: center;
+    transition: color 0.3s ease;
+    /* Transición suave para el color */
+}
+
+.ventas h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.ventas p {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Efecto hover para iluminar el texto en verde */
+.ventas:hover h3,
+.ventas:hover p {
+    color: #00ff00;
+}
+
+.grafica,
+.productos-mas-vendidos,
+.actualizaciones {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    width: 45%;
+}
+
+.grafica h3,
+.productos-mas-vendidos h3,
+.actualizaciones h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.grafico {
+    width: 100%;
+    height: auto;
+}
+
+.productos-mas-vendidos ul,
+.actualizaciones ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.productos-mas-vendidos li,
+.actualizaciones li {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+    background-color: #111;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+footer p {
+    font-size: 1rem;
+}
+
+.mejores-vendedores {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 40px;
+    text-align: center;
+}
+
+.mejores-vendedores h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.mejores-vendedores ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.mejores-vendedores li {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.vendedor-foto {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #ff6666;
+    /* Borde rojo para destacar */
+    box-shadow: 0px 0px 12px rgba(0, 255, 0, 0.6);
+    /* Sombra verde */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.vendedor-foto:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 18px rgba(255, 0, 0, 0.8);
+    /* Sombra roja al pasar el cursor */
+}
+
+.vendedor-info {
+    display: none;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.productos-mas-vendidos,
+.actualizaciones {
+    background-color: #1a1a1a;
+    padding: 25px;
+    border-radius: 15px;
+    width: 45%;
+    text-align: left;
+}
+
+.productos-mas-vendidos h3,
+.actualizaciones h3 {
+    font-size: 1.8rem;
+    color: #ff6666;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.productos-lista,
+.actualizaciones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.producto,
+.actualizacion {
+    background-color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.producto:hover,
+.actualizacion:hover {
+    background-color: #555;
+}
+
+.producto-nombre,
+.actualizacion-descripcion {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.producto-cantidad {
+    font-size: 1rem;
+    color: #bbb;
+}
+
+.producto-detalle-btn,
+.actualizacion-btn {
+    background-color: #ff6666;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.producto-detalle-btn:hover,
+.actualizacion-btn:hover {
+    background-color: #e60000;
+}
+
+.logout-button {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: 'Bodoni Moda', serif;
+    color: #fff;
+    background-color: #c0392b;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e74c3c;
+}
+
+.actualizaciones-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.actualizacion {
+    background-color: #2e2e2e;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.actualizacion:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    background-color: #444;
+}
+
+.actualizacion .actualizacion-descripcion {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+}
+
+.actualizacion:hover .actualizacion-descripcion {
+    color: #ffd700;
+    /* Color dorado al hacer hover */
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.6);
+}
+
+.resumen-contenedor {
+    display: flex;
+    gap: 20px;
+    /* Espacio entre los divs */
+    margin-top: 20px;
+}
+
+.mapa-ventas,
+.pronostico-ventas {
+    flex: 1;
+    /* Ocupa la mitad del contenedor cada uno */
+}
+
+#map {
+    height: 300px;
+    width: 100%;
+}
+
+#pronosticoVentasChart {
+    width: 100%;
+    height: 300px;
+}

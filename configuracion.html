@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración del Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="configuracion.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Moto1.png" alt="Logo Motos DELUXE" class="logo">
+            <h1>Análisis de Ventas y Reportes de Actividades</h1>
+            <button class="logout-button" onclick="logout()">Salir</button>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="ventas_diarias.html">Ventas Diarias</a></li>
+            <li><a href="generar_reportes.html">Generar Reportes</a></li>
+            <li><a href="configuracion.html">Configuración</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="configuracion">
+            <h2>Configuración del Sistema</h2>
+
+            <!-- Formulario para cambiar contraseña -->
+            <form id="configForm">
+                <h3>Cambiar Contraseña</h3>
+                <label for="oldPassword">Contraseña Actual:</label>
+                <input type="password" id="oldPassword" required>
+
+                <label for="newPassword">Nueva Contraseña:</label>
+                <input type="password" id="newPassword" required>
+
+                <label for="confirmPassword">Confirmar Nueva Contraseña:</label>
+                <input type="password" id="confirmPassword" required>
+
+                <button type="submit">Cambiar Contraseña</button>
+            </form>
+
+            <!-- Botones de gestión de usuarios -->
+            <h3>Gestión de Usuarios</h3>
+            <div class="user-management">
+                <button onclick="showCreateUserForm()">Crear Nuevo Usuario</button>
+                <button onclick="deleteUser()">Eliminar Usuario</button>
+                <button onclick="viewUsers()">Ver Usuarios Registrados</button>
+            </div>
+
+            <!-- Formulario para crear nuevo usuario -->
+            <div id="createUserForm" style="display:none;">
+                <h4>Crear Nuevo Usuario</h4>
+                <label for="newUsername">Nombre de Usuario:</label>
+                <input type="text" id="newUsername" required>
+
+                <label for="newPasswordCreate">Contraseña:</label>
+                <input type="password" id="newPasswordCreate" required>
+
+                <label for="newRole">Seleccionar Rol:</label>
+                <select id="newRole" required>
+                    <option value="vendedor">Vendedor</option>
+                    <option value="analista">Analista</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+
+                <button type="button" onclick="createUser()">Crear Usuario</button>
+                <button type="button" onclick="hideCreateUserForm()">Cancelar</button>
+            </div>
+
+            <div id="userList"></div>
+
+            <!-- Configuración de la página -->
+            <h3>Configuración de la Página</h3>
+            <form id="pageConfigForm">
+                <label for="logoUpload">Subir Nuevo Logo:</label>
+                <input type="file" id="logoUpload" onchange="uploadLogo()" accept="image/*">
+
+                <label for="pageTitle">Editar Título del Sistema:</label>
+                <input type="text" id="pageTitle" placeholder="Nuevo título..."
+                    value="Análisis de Ventas y Reportes de Actividades">
+
+                <label for="reportVisibility">Visibilidad de Reportes:</label>
+                <select id="reportVisibility">
+                    <option value="todos">Todos</option>
+                    <option value="analistas">Solo Analistas</option>
+                    <option value="administradores">Solo Administradores</option>
+                </select>
+
+                <button type="submit">Guardar Cambios</button>
+            </form>
+
+            <!-- Configuración de notificaciones -->
+            <h3>Notificaciones del Sistema</h3>
+            <form id="notificationConfigForm">
+                <label for="enableNotifications">Habilitar Notificaciones:</label>
+                <select id="enableNotifications">
+                    <option value="si">Sí</option>
+                    <option value="no">No</option>
+                </select>
+                <button type="submit">Guardar Configuración</button>
+            </form>
+
+            <!-- Manejo de permisos de usuarios -->
+            <h3>Cambiar Permisos de Usuario</h3>
+            <form id="permissionChangeForm">
+                <label for="usernamePermission">Nombre de Usuario:</label>
+                <input type="text" id="usernamePermission" required>
+
+                <label for="newRolePermission">Nuevo Rol:</label>
+                <select id="newRolePermission" required>
+                    <option value="vendedor">Vendedor</option>
+                    <option value="analista">Analista</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+
+                <button type="button" onclick="changeUserRole()">Cambiar Rol</button>
+            </form>
+
+            <!-- Registro de actividad del sistema -->
+            <h3>Registro de Actividad</h3>
+            <div id="activityLog">
+                <p>No hay actividades registradas.</p>
+            </div>
+
+            <!-- Configuración de zona horaria -->
+            <h3>Configuración de Fecha y Hora</h3>
+            <form id="timezoneConfigForm">
+                <label for="timezone">Zona Horaria:</label>
+                <select id="timezone">
+                    <option value="UTC-5">UTC-5</option>
+                    <option value="UTC-6">UTC-6</option>
+                    <option value="UTC-7">UTC-7</option>
+                </select>
+                <button type="submit">Guardar Configuración</button>
+            </form>
+
+            <!-- Restablecimiento de contraseña de usuario -->
+            <h3>Restablecer Contraseña de Usuario</h3>
+            <form id="resetPasswordForm">
+                <label for="usernameReset">Nombre de Usuario:</label>
+                <input type="text" id="usernameReset" required>
+
+                <label for="newPasswordReset">Nueva Contraseña:</label>
+                <input type="password" id="newPasswordReset" required>
+
+                <button type="button" onclick="resetUserPassword()">Restablecer Contraseña</button>
+            </form>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Motos DELUXE. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Función para cerrar sesión
+        function logout() {
+            localStorage.removeItem('userRole');
+            window.location.href = 'index.html'; // Redirigir al inicio de sesión
+        }
+
+        // Función para manejar el cambio de contraseña
+        document.getElementById('configForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const oldPassword = document.getElementById('oldPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            const storedPassword = localStorage.getItem('adminPassword'); // Obtener la contraseña almacenada
+
+            if (oldPassword === storedPassword) {
+                if (newPassword === confirmPassword) {
+                    localStorage.setItem('adminPassword', newPassword); // Actualizar la contraseña
+                    alert('Contraseña cambiada con éxito');
+                    document.getElementById('oldPassword').value = '';
+                    document.getElementById('newPassword').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                } else {
+                    alert('Las contraseñas no coinciden. Intenta de nuevo.');
+                }
+            } else {
+                alert('La contraseña actual es incorrecta.');
+            }
+        });
+
+        // Funciones de gestión de usuarios (simuladas con localStorage)
+        function showCreateUserForm() {
+            document.getElementById('createUserForm').style.display = 'block';
+        }
+
+        function hideCreateUserForm() {
+            document.getElementById('createUserForm').style.display = 'none';
+        }
+
+        function createUser() {
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPasswordCreate').value;
+            const role = document.getElementById('newRole').value;
+
+            if (username && password && role) {
+                let users = JSON.parse(localStorage.getItem('users')) || [];
+                users.push({ username, password, role });
+                localStorage.setItem('users', JSON.stringify(users)); // Guardar en localStorage
+                alert('Usuario creado exitosamente');
+                hideCreateUserForm();
+                viewUsers(); // Actualizar la lista de usuarios
+            } else {
+                alert('Por favor completa todos los campos.');
+            }
+        }
+
+        function viewUsers() {
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            const userListDiv = document.getElementById('userList');
+            userListDiv.innerHTML = '<h4>Usuarios Registrados:</h4>';
+            if (users.length === 0) {
+                userListDiv.innerHTML += '<p>No hay usuarios registrados.</p>';
+            } else {
+                users.forEach(user => {
+                    userListDiv.innerHTML += `<p>Usuario: ${user.username}, Rol: ${user.role}</p>`;
+                });
+            }
+        }
+
+        function deleteUser() {
+            const username = prompt('Introduce el nombre de usuario a eliminar:');
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            users = users.filter(user => user.username !== username);
+            localStorage.setItem('users', JSON.stringify(users));
+            viewUsers(); // Actualizar la lista
+        }
+
+        function changeUserRole() {
+            const username = document.getElementById('usernamePermission').value;
+            const newRole = document.getElementById('newRolePermission').value;
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            let userFound = false;
+
+            users.forEach(user => {
+                if (user.username === username) {
+                    user.role = newRole;
+                    userFound = true;
+                }
+            });
+
+            if (userFound) {
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Rol actualizado con éxito');
+            } else {
+                alert('Usuario no encontrado.');
+            }
+        }
+
+        function uploadLogo() {
+            const logoInput = document.getElementById('logoUpload');
+            const file = logoInput.files[0];
+            if (file) {
+                alert('Logo cargado exitosamente');
+            }
+        }
+
+        document.getElementById('timezoneConfigForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const timezone = document.getElementById('timezone').value;
+            alert(`Zona horaria configurada a: ${timezone}`);
+        });
+
+        document.getElementById('notificationConfigForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const enableNotifications = document.getElementById('enableNotifications').value;
+            alert(`Notificaciones ${enableNotifications === 'si' ? 'habilitadas' : 'deshabilitadas'}`);
+        });
+
+        document.getElementById('pageConfigForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const pageTitle = document.getElementById('pageTitle').value;
+            alert(`Título de página actualizado a: ${pageTitle}`);
+        });
+        // Verificar rol de usuario
+        const userRole = localStorage.getItem('userRole');
+
+        if (userRole !== 'administrador') {
+            alert('No tienes permiso para acceder a esta página.');
+            window.location.href = 'index.html'; // Redirigir a la página de inicio de sesión
+        }
+    </script>
+</body>
+
+</html>

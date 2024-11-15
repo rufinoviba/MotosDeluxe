@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso - Análisis de Ventas y Reportes de Actividades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo-container">
+            <a href='../inicio.html'>
+                <img src="Moto1.png" alt="Logo Motos DELUXE" class="logo"> </a>
+            <h1>Análisis de Ventas y Reportes de Actividades</h1>
+        </div>
+    </header>
+
+    <main>
+        <section id="login">
+            <h2>Ingreso</h2>
+            <form id="loginForm">
+                <label for="role">Selecciona tu rol:</label>
+                <select id="role" required>
+                    <option value="" disabled selected>Elige un rol</option>
+                    <option value="vendedor">Vendedor</option>
+                    <option value="analista">Analista</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+
+                <label for="username">Nombre de usuario:</label>
+                <input type="text" id="username" required>
+
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" required>
+
+                <button type="submit">Ingresar</button>
+            </form>
+            <div id="error" class="error-message"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Motos DELUXE - Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const role = document.getElementById('role').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            let redirectTo = '';
+
+            // Validar credenciales
+            if (role === 'vendedor' && username === 'eliud' && password === 'fatima') {
+                redirectTo = 'ventas_diarias.html';
+            } else if (role === 'analista' && username === 'rufino' && password === 'paloma') {
+                redirectTo = 'dashboard.html';
+            } else if (role === 'administrador' && username === 'josef' && password === 'karla') {
+                redirectTo = 'configuracion.html';
+            } else if (role === 'analista' && username === 'fanny' && password === 'chaquita') {
+                redirectTo = 'dashboard.html';
+            }
+
+            // Redirigir o mostrar error
+            if (redirectTo) {
+                localStorage.setItem('userRole', role); // Guardar rol en localStorage
+                window.location.href = redirectTo;
+            } else {
+                document.getElementById('error').textContent = 'Credenciales incorrectas. Inténtalo de nuevo.';
+            }
+        });
+    </script>
+</body>
+
+</html>
